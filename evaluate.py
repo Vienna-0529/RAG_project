@@ -194,9 +194,15 @@ def main():
 
     m_no = compute_metrics(results_no)
     m_rw = compute_metrics(results_rw)
-    print(f"  {'':<14} {'Recall@5':>9} {'MRR':>8} {'Hit':>8}")
-    print(f"  {'无改写':<14} {m_no['recall@5']:>9.4f} {m_no['mrr']:>8.4f} {m_no['hit_rate']:>9.2%}")
-    print(f"  {'有改写':<14} {m_rw['recall@5']:>9.4f} {m_rw['mrr']:>8.4f} {m_rw['hit_rate']:>9.2%}")
+    kv = CFG["k_values"]
+    header = f"  {'':<14} " + " ".join(f"{'Recall@'+str(k):>9}" for k in kv) + f" {'MRR':>8} {'Hit':>8}"
+    print(header)
+    line_no = f"  {'无改写':<14} " + " ".join(f"{m_no[f'recall@{k}']:>9.4f}" for k in kv)
+    line_no += f" {m_no['mrr']:>8.4f} {m_no['hit_rate']:>9.2%}"
+    print(line_no)
+    line_rw = f"  {'有改写':<14} " + " ".join(f"{m_rw[f'recall@{k}']:>9.4f}" for k in kv)
+    line_rw += f" {m_rw['mrr']:>8.4f} {m_rw['hit_rate']:>9.2%}"
+    print(line_rw)
     change = (m_rw["mrr"] - m_no["mrr"]) / max(m_no["mrr"], 0.001) * 100
     print(f"  → MRR {'↑' if change > 0 else '↓'} {abs(change):.1f}%")
 
