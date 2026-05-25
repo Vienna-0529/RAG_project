@@ -1,0 +1,11 @@
+[
+  {
+    "id": "mt_1",
+    "history": [
+      {"role": "user", "content": "上一轮用户问题"},
+      {"role": "assistant", "content": "上一轮助手回答"}
+    ],
+    "question": "含代词的最后提问（如：他后来怎么了）",
+    "relevant_keywords": ["关键词1", "关键词2"]
+  }
+]

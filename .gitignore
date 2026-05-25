@@ -1,0 +1,11 @@
+data/test_set.json
+data/multi_turn_test.json
+chroma_db/
+__pycache__/
+*.pkl
+*.pyc
+.env
+chat_history.json
+debug_chunks.md
+test.pdf
+ignore/
