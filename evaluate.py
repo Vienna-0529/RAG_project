@@ -25,7 +25,10 @@ def compute_metrics(results: list[tuple], k_values: list[int] = CFG["k_values"])
     if n == 0:
         return {}
 
-    metrics = {f"recall@{k}": 0.0 for k in k_values}
+    metrics = {}
+    for k in k_values:
+        metrics[f"recall@{k}"] = 0.0
+        metrics[f"precision@{k}"] = 0.0
     rr_sum = 0.0
     hits = 0
 
@@ -42,11 +45,13 @@ def compute_metrics(results: list[tuple], k_values: list[int] = CFG["k_values"])
         for k in k_values:
             relevant_in_k = sum(1 for c in chunks[:k] if is_relevant(c, keywords))
             metrics[f"recall@{k}"] += relevant_in_k / max(total_relevant, 1)
+            metrics[f"precision@{k}"] += relevant_in_k / k if k > 0 else 0
 
     metrics["mrr"] = rr_sum / n
     metrics["hit_rate"] = hits / n
     for k in k_values:
         metrics[f"recall@{k}"] /= n
+        metrics[f"precision@{k}"] /= n
     return metrics
 
 
@@ -97,20 +102,26 @@ def with_bm25_rewrite(q: str, k: int = 10) -> list[str]:
 # ── 打印 ──
 
 def print_table(metrics_list: list[dict], k_values: list[int] = CFG["k_values"]):
-    header = f"{'配置':<22} " + " ".join(f"{'Recall@'+str(k):>9}" for k in k_values) + f" {'MRR':>8} {'Hit':>8}"
+    cols = []
+    for k in k_values:
+        cols += [f"R@{k}", f"P@{k}"]
+    header = f"{'配置':<22} " + " ".join(f"{c:>7}" for c in cols) + f" {'MRR':>8} {'Hit':>8}"
     print("\n" + header)
     print("-" * len(header))
 
     best = {}
     for k in k_values:
         best[f"recall@{k}"] = max(m[f"recall@{k}"] for m in metrics_list)
+        best[f"precision@{k}"] = max(m[f"precision@{k}"] for m in metrics_list)
     best["mrr"] = max(m["mrr"] for m in metrics_list)
     best["hit_rate"] = max(m["hit_rate"] for m in metrics_list)
 
     for m in metrics_list:
         def mark(key):
-            return f"{m[key]:>.4f} *" if abs(m[key] - best[key]) < 1e-9 else f"{m[key]:>.4f}  "
-        line = f"{m['config']:<22} " + " ".join(mark(f"recall@{k}") for k in k_values)
+            return f"{m[key]:>.4f}*" if abs(m[key] - best[key]) < 1e-9 else f"{m[key]:>.4f} "
+        line = f"{m['config']:<22}"
+        for k in k_values:
+            line += f" {mark(f'recall@{k}'):>8} {mark(f'precision@{k}'):>8}"
         line += f" {mark('mrr'):>9} {mark('hit_rate'):>9}"
         print(line)
     print("  * 最优")
@@ -195,12 +206,19 @@ def main():
     m_no = compute_metrics(results_no)
     m_rw = compute_metrics(results_rw)
     kv = CFG["k_values"]
-    header = f"  {'':<14} " + " ".join(f"{'Recall@'+str(k):>9}" for k in kv) + f" {'MRR':>8} {'Hit':>8}"
+    cols = []
+    for k in kv:
+        cols += [f"R@{k}", f"P@{k}"]
+    header = f"  {'':<14} " + " ".join(f"{c:>7}" for c in cols) + f" {'MRR':>8} {'Hit':>8}"
     print(header)
-    line_no = f"  {'无改写':<14} " + " ".join(f"{m_no[f'recall@{k}']:>9.4f}" for k in kv)
+    line_no = f"  {'无改写':<14}"
+    for k in kv:
+        line_no += f" {m_no[f'recall@{k}']:>7.4f} {m_no[f'precision@{k}']:>7.4f}"
     line_no += f" {m_no['mrr']:>8.4f} {m_no['hit_rate']:>9.2%}"
     print(line_no)
-    line_rw = f"  {'有改写':<14} " + " ".join(f"{m_rw[f'recall@{k}']:>9.4f}" for k in kv)
+    line_rw = f"  {'有改写':<14}"
+    for k in kv:
+        line_rw += f" {m_rw[f'recall@{k}']:>7.4f} {m_rw[f'precision@{k}']:>7.4f}"
     line_rw += f" {m_rw['mrr']:>8.4f} {m_rw['hit_rate']:>9.2%}"
     print(line_rw)
     change = (m_rw["mrr"] - m_no["mrr"]) / max(m_no["mrr"], 0.001) * 100
