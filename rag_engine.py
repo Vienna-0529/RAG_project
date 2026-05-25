@@ -48,16 +48,6 @@ _STOPWORDS_EN = {
     'you', 'he', 'she', 'they', 'have', 'has', 'had', 'do', 'does',
 }
 
-# 中文：注册自定义词，防止 jieba 把关键语义切碎
-if LANG == "zh":
-    _jieba_words = [
-        "存在感", "最弱", "龙舟祈福", "野种",
-        "何家树", "何家浩", "何宏光", "何宏霄",
-        "西樵村", "西樵河", "朱门街", "销户", "软骨病",
-    ]
-    for w in _jieba_words:
-        jieba.add_word(w)
-
 
 def better_tokenize(text):
     if LANG == "en":
