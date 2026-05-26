@@ -67,7 +67,7 @@ python evaluate.py
 | `rag_engine.py` | 混合检索、Reranker、Agentic 路由、LLM 生成 |
 | `query_rewriter.py` | 多轮对话指代消解查询改写 |
 | `agentic_search.py` | ReAct 模式多跳检索 |
-| `evaluate.py` | 检索质量评估（Recall@K / MRR / Hit Rate）|
+| `evaluate.py` | 检索质量评估（Recall@K / Precision@K / MRR / Hit Rate）|
 | `app.py` | Streamlit 聊天界面 |
 
 ## 技术栈
