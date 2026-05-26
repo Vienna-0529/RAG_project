@@ -72,4 +72,4 @@ python evaluate.py
 
 ## 技术栈
 
-LangChain / ChromaDB / BM25 / BGE-large-zh-v1.5 / bge-reranker-v2-m3 / Ollama (qwen2.5:7b) / Streamlit
+LangChain / ChromaDB / BM25 / BGE-large-zh-v1.5 / bge-reranker-v2-m3 / Ollama (qwen3:8b) / Streamlit
