@@ -38,8 +38,8 @@ INGEST = {
 #  2. 检索 & 生成 (rag_engine.py)
 RAG = {
     # ── 生成模型 ──
-    "model": "qwen2.5:7b",
-    # 备选: "qwen2:7b"
+    "model": "qwen3:8b",
+    # 备选: "qwen2.5:7b"
 
     # ── 生成参数 ──
     "temperature": 0.2,         # 越低越确定，事实问答用 0.1~0.3
@@ -69,7 +69,7 @@ RAG = {
 
 #  3. 查询改写 (query_rewriter.py)
 QUERY_REWRITE = {
-    "model": "qwen2.5:7b",      # 指令遵循比 qwen2:7b 强，改写不会跑偏成回答
+    "model": "qwen3:8b",         # Qwen3 指令遵循更强，指代消解更可靠
     "temperature": 0.1,          # 改写要确定性，不能有随机性
     "num_predict": 100,          # 改写后问题通常 30 字以内
 }
@@ -77,7 +77,7 @@ QUERY_REWRITE = {
 
 #  4. Agentic 检索 (agentic_search.py)
 AGENTIC = {
-    "model": "qwen2.5:7b",
+    "model": "qwen3:8b",
     "max_rounds": 2,            # 最大搜索轮次
     "docs_per_query": 8,        # 每个子查询返回数
     "strategy_temperature": 0.1, # 搜索策略温度（需低，保证稳定）
