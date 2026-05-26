@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "question": "什么是自动求导？PyTorch 中如何实现？",
+    "type": "概念型",
+    "relevant_keywords": ["自动求导", "autograd", "backward", "梯度"]
+  },
+  {
+    "id": 2,
+    "question": "nn.Module 的作用是什么？",
+    "type": "概念型",
+    "relevant_keywords": ["nn.Module", "基类", "参数", "forward"]
+  },
+  {
+    "id": 3,
+    "question": "DataLoader 的 batch_size 参数控制什么？",
+    "type": "事实型",
+    "relevant_keywords": ["batch_size", "DataLoader", "批量"]
+  },
+  {
+    "id": 4,
+    "question": "什么是过拟合？如何防止？",
+    "type": "概念型",
+    "relevant_keywords": ["过拟合", "正则化", "dropout", "权重衰减"]
+  },
+  {
+    "id": 5,
+    "question": "torch.save 和 torch.load 怎么使用？",
+    "type": "事实型",
+    "relevant_keywords": ["torch.save", "torch.load", "state_dict", "保存"]
+  },
+  {
+    "id": 6,
+    "question": "卷积层 nn.Conv2d 有哪些必要参数？",
+    "type": "事实型",
+    "relevant_keywords": ["Conv2d", "in_channels", "out_channels", "kernel_size"]
+  },
+  {
+    "id": 7,
+    "question": "为什么训练深度学习模型需要 GPU？",
+    "type": "概念型",
+    "relevant_keywords": ["GPU", "并行计算", "矩阵乘法", "CUDA"]
+  },
+  {
+    "id": 8,
+    "question": "softmax 函数的作用是什么？",
+    "type": "概念型",
+    "relevant_keywords": ["softmax", "概率分布", "归一化", "指数"]
+  },
+  {
+    "id": 9,
+    "question": "优化器 SGD 和 Adam 有什么区别？",
+    "type": "概念型",
+    "relevant_keywords": ["SGD", "Adam", "学习率", "动量", "自适应"]
+  },
+  {
+    "id": 10,
+    "question": "损失函数 nn.CrossEntropyLoss 内部做了什么？",
+    "type": "概念型",
+    "relevant_keywords": ["CrossEntropyLoss", "softmax", "对数", "负对数似然"]
+  },
+  {
+    "id": 11,
+    "question": "如何将模型从 CPU 迁移到 GPU？",
+    "type": "事实型",
+    "relevant_keywords": ["model.to", "cuda", "device", "GPU"]
+  },
+  {
+    "id": 12,
+    "question": "什么是学习率衰减？常见策略有哪些？",
+    "type": "概念型",
+    "relevant_keywords": ["学习率衰减", "scheduler", "StepLR", "余弦退火"]
+  },
+  {
+    "id": 13,
+    "question": "model.train() 和 model.eval() 有什么区别？",
+    "type": "事实型",
+    "relevant_keywords": ["model.train", "model.eval", "dropout", "batch_norm"]
+  },
+  {
+    "id": 14,
+    "question": "什么是批量归一化（Batch Normalization）？",
+    "type": "概念型",
+    "relevant_keywords": ["批量归一化", "BatchNorm", "均值", "方差", "加速训练"]
+  },
+  {
+    "id": 15,
+    "question": "怎么冻结模型的某些层不参与训练？",
+    "type": "事实型",
+    "relevant_keywords": ["requires_grad", "冻结", "参数", "微调"]
+  },
+  {
+    "id": 16,
+    "question": "梯度消失和梯度爆炸是什么？怎么解决？",
+    "type": "概念型",
+    "relevant_keywords": ["梯度消失", "梯度爆炸", "梯度裁剪", "残差连接"]
+  },
+  {
+    "id": 17,
+    "question": "DataLoader 的 num_workers 参数设置多少合适？",
+    "type": "事实型",
+    "relevant_keywords": ["num_workers", "DataLoader", "多进程", "加载"]
+  },
+  {
+    "id": 18,
+    "question": "什么是迁移学习？在 PyTorch 中怎么操作？",
+    "type": "概念型",
+    "relevant_keywords": ["迁移学习", "预训练", "微调", "pretrained", "finetune"]
+  },
+  {
+    "id": 19,
+    "question": "torch.no_grad() 的作用和使用场景？",
+    "type": "事实型",
+    "relevant_keywords": ["torch.no_grad", "推理", "梯度", "关闭"]
+  },
+  {
+    "id": 20,
+    "question": "什么是残差连接？为什么 ResNet 需要它？",
+    "type": "概念型",
+    "relevant_keywords": ["残差连接", "ResNet", "梯度消失", "恒等映射"]
+  }
+]

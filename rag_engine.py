@@ -1,5 +1,6 @@
 import os
-os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+os.environ.setdefault('HF_ENDPOINT', 'https://hf-mirror.com')
+os.environ['ANONYMIZED_TELEMETRY'] = 'False'  # 关闭 ChromaDB 后台遥测线程，避免 httpx 冲突
 import jieba
 from jieba import analyse
 import pickle
@@ -50,11 +51,14 @@ _STOPWORDS_EN = {
 
 
 def better_tokenize(text):
-    if LANG == "en":
-        words = text.lower().split()
-        return [w for w in words if len(w) > 1 and w not in _STOPWORDS_EN]
     words = jieba.cut(text, cut_all=False)
-    return [w for w in words if len(w) > 1 and w not in _STOPWORDS_ZH]
+    result = []
+    for w in words:
+        w_stripped = w.strip()
+        if not w_stripped or w_stripped.lower() in _STOPWORDS_EN or w_stripped in _STOPWORDS_ZH:
+            continue
+        result.append(w_stripped)
+    return result
 
 embeddings = HuggingFaceEmbeddings(
     model_name=INGEST["embedding_model"][LANG],
@@ -166,7 +170,7 @@ def _route_question(question: str) -> str:
     三路自动路由：
       "agentic" — 多跳因果推理，需拆解子问题搜索
       "reranker" — 中等复杂度，CrossEncoder 精排
-      "bm25" — 简单事实，关键词直出
+      "hybrid" — 简单事实，混合检索直出
     """
     causal_core = any(kw in question for kw in [
         "为什么", "原因", "怎么导致", "如何导致", "起因", "怎么才能",
@@ -181,7 +185,7 @@ def _route_question(question: str) -> str:
     if multi_hop and not is_pure_fact:
         return "agentic"
     elif is_pure_fact:
-        return "bm25"
+        return "hybrid"
     else:
         return "reranker"
 

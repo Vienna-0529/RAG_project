@@ -11,8 +11,8 @@ LANG = "zh"
 #  1. 数据摄入 (ingest.py)
 INGEST = {
     # ── 切片 ──
-    "chunk_size": 500,          # 切片最大字符数
-    "overlap_chars": 100,       # 相邻切片重叠字符数
+    "chunk_size": 800,      
+    "overlap_chars": 120,       
     "separators": {
         "zh": ["\n\n", "\n", "。", "！", "？", "；", "，", " "],
         "en": ["\n\n", "\n", ". ", "! ", "? ", "; ", ", ", " "],
@@ -32,7 +32,7 @@ INGEST = {
 
     # —— 文本来源 ——
     # 支持 PDF / TXT / MD / DOCX / 网页 URL，根据后缀自动选 Loader
-    "sources": ["./test.pdf"],
+    "sources": ["./ignore/d2l-zh-pytorch.pdf"],
 }
 
 #  2. 检索 & 生成 (rag_engine.py)
@@ -87,8 +87,8 @@ AGENTIC = {
 
 #  5. 评估 (evaluate.py)
 EVALUATE = {
-    "test_set_path": "./data/test_set.json",
-    "multi_turn_path": "./data/multi_turn_test.json",
+    "test_set_path": "./data/d2l_test_set.json",
+    "multi_turn_path": "./data/d2l_multi_turn_test.json",
     "k_values": [3, 5, 10],     # 评估的 K 值
     "relevance_mode": "loose",  # "strict"=全命中, "loose"=半数命中
 }

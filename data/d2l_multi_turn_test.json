@@ -1,0 +1,56 @@
+[
+  {
+    "id": "mt_1",
+    "history": [
+      {"role": "user", "content": "nn.Module 的 forward 函数怎么定义？"},
+      {"role": "assistant", "content": "forward 函数需要重写 nn.Module 的 forward 方法，在里面定义前向传播的计算逻辑。PyTorch 会自动调用 __call__，而 __call__ 内部会调用 forward，并在此过程中构建计算图用于自动求导。"}
+    ],
+    "question": "它和反向传播的关系是什么？",
+    "relevant_keywords": ["autograd", "反向传播", "计算图", "backward"]
+  },
+  {
+    "id": "mt_2",
+    "history": [
+      {"role": "user", "content": "Adam 优化器有哪些超参数？"},
+      {"role": "assistant", "content": "Adam 的主要超参数包括：学习率 lr（默认 0.001）、beta1（默认 0.9，控制一阶矩估计）、beta2（默认 0.999，控制二阶矩估计）、eps（默认 1e-8，数值稳定性）、weight_decay（默认 0，权重衰减）。"}
+    ],
+    "question": "这些参数在什么情况下需要调整？",
+    "relevant_keywords": ["学习率", "超参数", "调优", "beta1", "beta2"]
+  },
+  {
+    "id": "mt_3",
+    "history": [
+      {"role": "user", "content": "什么是批量归一化？"},
+      {"role": "assistant", "content": "批量归一化（Batch Normalization）是在每一层输入前对 mini-batch 数据进行标准化，使其均值接近 0、方差接近 1。它通过可学习的缩放参数 gamma 和平移参数 beta 来恢复模型的表达能力。"}
+    ],
+    "question": "它在推理时和训练时的行为一样吗？",
+    "relevant_keywords": ["推理", "训练", "BatchNorm", "移动平均", "model.eval"]
+  },
+  {
+    "id": "mt_4",
+    "history": [
+      {"role": "user", "content": "torch.save 怎么保存训练好的模型？"},
+      {"role": "assistant", "content": "推荐使用 state_dict：torch.save(model.state_dict(), 'model.pth')。state_dict 是一个字典，存储了模型所有可学习参数的名字和对应的张量值。加载时用 model.load_state_dict(torch.load('model.pth'))。"}
+    ],
+    "question": "这个方法能跨设备加载模型吗？",
+    "relevant_keywords": ["map_location", "CPU", "GPU", "跨设备", "加载"]
+  },
+  {
+    "id": "mt_5",
+    "history": [
+      {"role": "user", "content": "过拟合的表现是什么？"},
+      {"role": "assistant", "content": "过拟合的典型表现是：训练集上损失持续下降、准确率高；但验证集上损失先降后升、准确率停滞或下降。说明模型在记忆训练数据而非学习通用规律。"}
+    ],
+    "question": "怎么判断它发生过拟合的临界点？",
+    "relevant_keywords": ["提前停止", "验证集", "early_stopping", "早停"]
+  },
+  {
+    "id": "mt_6",
+    "history": [
+      {"role": "user", "content": "DataLoader 有什么作用？"},
+      {"role": "assistant", "content": "DataLoader 将 Dataset 包装为可迭代对象，支持批量加载、数据打乱（shuffle）、多进程并行加载（num_workers），是 PyTorch 数据管道的核心组件。"}
+    ],
+    "question": "shuffle 参数在训练和验证时应该分别怎么设？",
+    "relevant_keywords": ["shuffle", "训练", "验证", "数据顺序"]
+  }
+]

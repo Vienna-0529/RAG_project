@@ -1,6 +1,7 @@
 import os
-os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
-from langchain_community.document_loaders import PyPDFLoader, TextLoader, WebBaseLoader,Docx2txtLoader
+os.environ.setdefault('HF_ENDPOINT', 'https://hf-mirror.com')
+os.environ['ANONYMIZED_TELEMETRY'] = 'False'
+from langchain_community.document_loaders import PyMuPDFLoader, TextLoader, WebBaseLoader, Docx2txtLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -31,7 +32,7 @@ def load_source(source: str):
     """根据文件后缀或协议选择对应的 LangChain Loader"""
     ext = os.path.splitext(source)[1].lower()
     if ext == ".pdf":
-        return PyPDFLoader(source).load(), "pdf"
+        return PyMuPDFLoader(source).load(), "pdf"
     elif ext == ".txt":
         return TextLoader(source, encoding="utf-8").load(), "txt"
     elif ext == ".md":
