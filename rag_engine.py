@@ -81,9 +81,9 @@ with open(INGEST["corpus_file"], "rb") as f:
 tokenized_corpus = [better_tokenize(doc.page_content) for doc in all_splits]
 bm25_engine = BM25Okapi(tokenized_corpus, k1=CFG["bm25_k1"])
 
-def generate_response_with_rewrite(question, history=None):
+def generate_response_with_rewrite(question, history=None, use_rerank="auto"):
     rewritten = smart_rewrite(question, history)
-    return generate_response(rewritten)
+    return generate_response(rewritten, use_rerank=use_rerank)
 
 def get_hybrid_context_with_docs(question, k=None, vector_weight=None, bm25_weight=None,
                                   use_rerank=False):
@@ -175,7 +175,7 @@ def _route_question(question: str) -> str:
     causal_core = any(kw in question for kw in [
         "为什么", "原因", "怎么导致", "如何导致", "起因", "怎么才能",
     ])
-    multi_hop = causal_core and (
+    multi_hop = causal_core or (
         len(question) > 12 or "和" in question or "与" in question
     )
     is_pure_fact = any(p in question for p in [
@@ -184,8 +184,6 @@ def _route_question(question: str) -> str:
 
     if multi_hop and not is_pure_fact:
         return "agentic"
-    elif is_pure_fact:
-        return "hybrid"
     else:
         return "reranker"
 

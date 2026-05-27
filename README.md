@@ -20,7 +20,7 @@
 pip install -r requirements.txt
 
 # 2. 拉取模型
-ollama pull qwen2.5:7b
+ollama pull qwen3:8b        # 需 4GB+ 可用内存，不够可换 qwen2.5:7b
 # 3. 准备 PDF，修改 config.py 中 sources
 "sources": ["./your_file.pdf"],
 
