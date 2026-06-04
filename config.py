@@ -69,7 +69,7 @@ RAG = {
 
 #  3. 查询改写 (query_rewriter.py)
 QUERY_REWRITE = {
-    "model": "qwen3:8b",  # 需 4GB+ 可用内存         # Qwen3 指令遵循更强，指代消解更可靠
+    "model": "qwen3:8b",         # Qwen3 指令遵循更强，指代消解更可靠
     "temperature": 0.1,          # 改写要确定性，不能有随机性
     "num_predict": 100,          # 改写后问题通常 30 字以内
 }

@@ -20,7 +20,8 @@
 pip install -r requirements.txt
 
 # 2. 拉取模型
-ollama pull qwen3:8b        # 需 4GB+ 可用内存，不够可换 qwen2.5:7b
+ollama pull qwen3:8b
+
 # 3. 准备 PDF，修改 config.py 中 sources
 "sources": ["./your_file.pdf"],
 
@@ -36,27 +37,21 @@ python evaluate.py
 
 ## 评估结果
 
-### 动手学深度学习（d2l-zh-pytorch.pdf，2271 个切片）
+50 题测试集，10 种检索配置消融实验：
 
-| 配置 | R@5 | P@5 | MRR | Hit |
-|------|------|------|------|------|
-| 纯向量 | 0.15 | 0.15 | 0.40 | 60% |
-| 纯 BM25 | 0.19 | 0.20 | 0.33 | 65% |
-| **混合 V0.5+B0.5** | **0.15** | **0.16** | **0.42** | **70%** |
-| BM25 + Reranker | 0.20 | 0.25 | 0.35 | 65% |
+| 配置 | R@10 | MRR | Hit |
+|------|------|-----|------|
+| 纯 BM25 | 0.24 | 0.27 | 48% |
+| 纯向量（BGE） | 0.25 | 0.33 | 50% |
+| 混合检索 V0.5+B0.5 | 0.29 | 0.33 | 56% |
+| **BM25 + Reranker** | **0.35** | **0.40** | **58%** |
 
-### 小说（test.pdf，826 个切片）
+### 关键发现
 
-| 配置 | R@5 | MRR | Hit |
-|------|------|------|------|
-| 纯 BM25 | 0.65 | 0.44 | 75% |
-| BM25 + Reranker | 0.75 | 0.60 | 75% |
-
-### 结论
-
-- 教材文档（中英混合）：向量检索有效，混合 0.5+0.5 最优（MRR 0.42）
-- 叙事文本（纯中文）：BM25 主导，Reranker 可大幅提升（MRR 0.60）
-- 不同文档类型的最优配置不同，`config.py` 可按需切换参数
+- **Reranker 精排**：MRR 从 0.27 提升至 0.40（**+48%** vs 纯 BM25），R@10 从 0.24 提升至 0.35（**+45%**）
+- **RRF 混合检索**：Hit Rate 从 48% 提升至 56%（**+8pp** vs 纯 BM25）
+- **Reranker 候选池减半**（100 → 50）：检索延迟从 ~90s 压缩至 ~45s，MRR 仅降 0.01
+- **Agentic ReAct**：两轮迭代检索解决因果多跳问题，LLM 自主拆解子查询并判断信息缺口
 
 ## 项目结构
 
@@ -72,4 +67,4 @@ python evaluate.py
 
 ## 技术栈
 
-LangChain / ChromaDB / BM25 / BGE-large-zh-v1.5 / bge-reranker-v2-m3 / Ollama (qwen3:8b) / Streamlit
+LangChain / ChromaDB / BM25 / BGE-large-zh-v1.5 / bge-reranker-v2-m3 / Ollama (qwen2.5:7b) / Streamlit
