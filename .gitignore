@@ -1,7 +1,4 @@
-data/test_set.json
-data/multi_turn_test.json
-data/d2l_test_set.json
-data/d2l_multi_turn_test.json
+data/data_exm/
 chroma_db/
 __pycache__/
 *.pkl

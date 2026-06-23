@@ -87,8 +87,8 @@ AGENTIC = {
 
 #  5. 评估 (evaluate.py)
 EVALUATE = {
-    "test_set_path": "./data/d2l_test_set.json",
-    "multi_turn_path": "./data/d2l_multi_turn_test.json",
+    "test_set_path": "./data/test_set.example.json",
+    "multi_turn_path": "./data/multi_turn_test.example.json",
     "k_values": [3, 5, 10],     # 评估的 K 值
     "relevance_mode": "loose",  # "strict"=全命中, "loose"=半数命中
 }
